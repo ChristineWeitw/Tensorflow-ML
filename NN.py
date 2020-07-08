@@ -32,7 +32,20 @@ nn_model = keras.Sequential([
     keras.layers.Dense(128,activation='relu'),
     keras.layers.Dense(10,activation='softmax')
 ])
-## Flatten - all the pixel into 724
-## Dense - connect the nerons from previous layer to this 128 neurons' layer (current layer)
-## output layer (chosse 10 neurons accourding to the number of)
-## Softmax - make sure all the neurons' value added up to 1 ( each of them is between [0,1])
+    ## Flatten - all the pixel into 724
+    ## Dense - connect the nerons from previous layer to this 128 neurons' layer (current layer)
+    ## output layer (chosse 10 neurons accourding to the number of)
+    ## Softmax - make sure all the neurons' value added up to 1 ( each of them is between [0,1])
+
+# Compile the model (these are hyperparameters)
+nn_model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+
+nn_model.fit(train_images, train_labels, epochs=10)
+
+test_lost, test_acuracy = nn_model.evaluate(test_images, test_labels, verbose =1)
+
+# how to solve overfitting problem
+    # adapt the hyperparamters = ex. decrease the epochs, change the structure of NN
+    
+predictions = nn_model.predict(test_images)
+print(np.argmax(predictions[0])) # return the class that has highest possibility 
